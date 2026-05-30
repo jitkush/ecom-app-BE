@@ -1,0 +1,24 @@
+spring:
+  application:
+    name: ecommerce-foundation
+
+  profiles:
+    active: local
+
+server:
+  port: 8080
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+
+  endpoint:
+    health:
+      show-details: always
+
+app:
+  name: Ecommerce Foundation
+  version: 0.0.1
+  environment: ${spring.profiles.active}
