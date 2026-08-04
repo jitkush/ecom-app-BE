@@ -1,0 +1,15 @@
+services:
+  postgres:
+    image: postgres:17.9-alpine
+    container_name: aparna-postgres
+    environment:
+      POSTGRES_DB: aparna_jewels
+      POSTGRES_USER: aparna_app
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-local_dev_only_change_me}
+    ports:
+      - "5432:5432"
+    volumes:
+      - aparna_postgres_data:/var/lib/postgresql/data
+
+volumes:
+  aparna_postgres_data:
