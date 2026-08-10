@@ -1,4 +1,4 @@
-package com.ecom.foundation.auth.entity;
+package com.ecom.foundation.auth.Entity;
 
 public enum AccountStatus {
     ACTIVE,

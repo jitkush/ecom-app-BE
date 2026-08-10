@@ -1,4 +1,4 @@
-package com.ecom.foundation.auth.entity;
+package com.ecom.foundation.auth.Entity;
 
 import java.io.Serializable;
 import java.util.Objects;

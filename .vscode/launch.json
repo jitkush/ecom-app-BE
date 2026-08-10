@@ -1,0 +1,12 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "java",
+      "name": "Launch EcommerceFoundationApplication",
+      "request": "launch",
+      "mainClass": "com.ecom.foundation.EcommerceFoundationApplication",
+      "projectName": "ecommerce-foundation"
+    }
+  ]
+}

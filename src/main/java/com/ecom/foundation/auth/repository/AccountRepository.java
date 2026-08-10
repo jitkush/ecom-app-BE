@@ -1,11 +1,11 @@
-package com.ecom.foundation.auth.repository;
+package com.ecom.foundation.auth.Repository;
 
 import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.ecom.foundation.auth.entity.Account;
+import com.ecom.foundation.auth.Entity.Account;
 
 
 public interface AccountRepository extends JpaRepository<Account, Long> {
