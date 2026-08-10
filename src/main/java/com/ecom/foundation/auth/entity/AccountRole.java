@@ -1,7 +1,9 @@
-package com.ecom.foundation.auth.entity;
+package com.ecom.foundation.auth.Entity;
 
 import java.time.Instant;
 import java.util.Objects;
+
+import com.ecom.foundation.auth.Entity.Role;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;

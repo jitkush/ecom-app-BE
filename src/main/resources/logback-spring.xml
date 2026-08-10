@@ -52,7 +52,7 @@
 
     </appender>
 
-    <root level="INFO">
+    <root level="DEBUG">
         <appender-ref ref="EXECUTION_JSON_FILE"/>
     </root>
 
