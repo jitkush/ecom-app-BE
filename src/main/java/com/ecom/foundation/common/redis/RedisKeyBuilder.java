@@ -1,6 +1,7 @@
 package com.ecom.foundation.common.redis;
 
-import java.util.Locale;
+import static com.ecom.foundation.common.redis.RedisValidation.validateAndNormaliseString;
+import static com.ecom.foundation.common.redis.RedisValidation.validateAndNormaliseIdentifierToken;
 
 import org.springframework.stereotype.Component;
 
@@ -10,21 +11,6 @@ public class RedisKeyBuilder {
 
     public RedisKeyBuilder(RedisKeyProperties properties) {
         this.properties = properties;
-    }
-
-    private String validateAndNormaliseString(String fieldName, String value ) {
-        if (value == null || value.isBlank() || value.contains(":")) {
-            String errorMessage = fieldName + " cannot be empty or contain :";
-            throw new IllegalArgumentException(errorMessage);
-        }
-        return value.trim().toLowerCase(Locale.ROOT);
-    }
-
-    private String validateAndNormaliseIdentifierToken( String identifier) {
-        if(identifier == null || identifier.isBlank() || identifier.contains(":")) {
-            throw new IllegalArgumentException("IDENTIFIER cannot be null or contain :");
-        }
-        return identifier.trim();
     }
 
     public String build(

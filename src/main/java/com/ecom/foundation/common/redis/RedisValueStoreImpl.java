@@ -1,11 +1,13 @@
 package com.ecom.foundation.common.redis;
-import com.ecom.foundation.common.redis.RedisHelper;
+
+import static com.ecom.foundation.common.redis.RedisValidation.validateKey;
+import static com.ecom.foundation.common.redis.RedisValidation.validateTtl;
+import static com.ecom.foundation.common.redis.RedisValidation.validateValue;
+
 
 import java.time.Duration;
 import java.util.Optional;
 
-import org.json.JSONException;
-import org.springframework.boot.actuate.autoconfigure.metrics.MetricsProperties.Data;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
@@ -14,26 +16,23 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Component
-public class JsonRedisValueStore implements RedisValuestore {
+public class RedisValueStoreImpl implements RedisValuestore {
     private final StringRedisTemplate redisTemplate;
     private final ObjectMapper objectMapper;
-    private final RedisHelper redisHelper;
 
-    public JsonRedisValueStore(
+    public RedisValueStoreImpl(
         StringRedisTemplate redisTemplate,
-        ObjectMapper objectMapper,
-        RedisHelper redisHelper
+        ObjectMapper objectMapper
     ) {
         this.redisTemplate = redisTemplate;
         this.objectMapper = objectMapper;
-        this.redisHelper = redisHelper;
     }
 
     @Override
     public <T> void save(String key, T value, Duration ttl) {
-        redisHelper.validateKey(key);
-        redisHelper.validateValue(value);
-        redisHelper.validateTtl(ttl);
+        validateKey(key);
+        validateValue(value);
+        validateTtl(ttl);
 
         try {
             String json = objectMapper.writeValueAsString(value);
@@ -47,7 +46,7 @@ public class JsonRedisValueStore implements RedisValuestore {
 
     @Override
     public <T> Optional<T> find (String key, Class<T> valueType) {
-        redisHelper.validateKey(key);
+        validateKey(key);
         try {
 
             String json = redisTemplate.opsForValue().get(key);
@@ -63,7 +62,7 @@ public class JsonRedisValueStore implements RedisValuestore {
 
     @Override
     public boolean delete(String key) {
-        redisHelper.validateKey(key);
+        validateKey(key);
         try {
             boolean status = redisTemplate.delete(key);
             return Boolean.TRUE.equals(status);
@@ -74,7 +73,7 @@ public class JsonRedisValueStore implements RedisValuestore {
 
     @Override
     public boolean exists(String key) {
-        redisHelper.validateKey(key);
+        validateKey(key);
         try {
             Boolean exists = redisTemplate.hasKey(key);
             return Boolean.TRUE.equals(exists);

@@ -1,9 +1,7 @@
 package com.ecom.foundation.common.redis;
 
 import java.util.Optional;
-
-import ch.qos.logback.core.util.Duration;
-
+import java.time.Duration;
 public interface RedisValuestore {
     <T> void save( String key, T value, Duration ttl );
 
