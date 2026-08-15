@@ -1,11 +1,14 @@
 {
-  "java.autobuild.enabled": true,
   "java.completion.enabled": true,
   "java.configuration.updateBuildConfiguration": "automatic",
   "java.maven.downloadSources": true,
   "java.referencesCodeLens.enabled": true,
   "java.signatureHelp.enabled": true,
+  "java.autobuild.enabled": false,
+  "java.compile.nullAnalysis.mode": "automatic",
+
   "maven.executable.preferMavenWrapper": true,
+
   "editor.quickSuggestions": {
     "other": "on",
     "comments": "off",
@@ -13,9 +16,19 @@
   },
   "editor.suggestOnTriggerCharacters": true,
   "editor.acceptSuggestionOnEnter": "on",
+
   "editor.inlineSuggest.enabled": true,
+  "editor.inlineSuggest.showToolbar": "onHover",
+
+  "github.copilot.enable": {
+    "*": true,
+    "java": true
+  },
+  "github.copilot.nextEditSuggestions.enabled": false,
+
+  "editor.formatOnSave": false,
+
   "[java]": {
     "editor.suggest.snippetsPreventQuickSuggestions": false
-  },
-  "java.compile.nullAnalysis.mode": "automatic"
+  }
 }

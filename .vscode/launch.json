@@ -3,10 +3,13 @@
   "configurations": [
     {
       "type": "java",
-      "name": "Launch EcommerceFoundationApplication",
+      "name": "Launch EcommerceFoundationApplication (local)",
       "request": "launch",
       "mainClass": "com.ecom.foundation.EcommerceFoundationApplication",
-      "projectName": "ecommerce-foundation"
+      "projectName": "ecommerce-foundation",
+      "args": "--spring.profiles.active=local",
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal"
     }
   ]
 }

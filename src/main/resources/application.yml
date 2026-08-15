@@ -22,3 +22,7 @@ app:
   name: Ecommerce Foundation
   version: 0.0.1
   environment: ${spring.profiles.active}
+  redis:
+    key:
+      namespace: aj
+      environment: ${APP_ENV:${spring.profiles.active}}
