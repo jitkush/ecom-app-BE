@@ -1,11 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <configuration>
-    <springProperty scope="context" name="APP_NAME" source="spring.application.name" defaultValue="ecommerce-foundation"/>
-    <springProperty scope="context" name="APP_ENV" source="app.environment" defaultValue="local"/>
-    <property scope="context" name="LOG_DIR" value="${LOG_DIR:-./logs/${APP_NAME}}"/>
 
-     <appender name="EXECUTION_JSON_FILE" class="ch.qos.logback.classic.sift.SiftingAppender">
+    <springProperty
+            scope="context"
+            name="APP_NAME"
+            source="spring.application.name"
+            defaultValue="ecommerce-foundation"/>
+
+    <property
+            scope="context"
+            name="LOG_DIR"
+            value="${LOG_DIR:-./logs/${APP_NAME}}"/>
+
+    <appender name="EXECUTION_JSON_FILE"
+              class="ch.qos.logback.classic.sift.SiftingAppender">
 
         <discriminator class="ch.qos.logback.classic.sift.MDCBasedDiscriminator">
             <key>traceType</key>
@@ -13,49 +22,69 @@
         </discriminator>
 
         <sift>
-            <appender name="EXECUTION-${traceType}" class="ch.qos.logback.core.rolling.RollingFileAppender">
+
+            <appender name="EXECUTION-${traceType}"
+                      class="ch.qos.logback.core.rolling.RollingFileAppender">
+
                 <file>${LOG_DIR}/execution/${traceType}.json</file>
 
                 <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-                    <fileNamePattern>${LOG_DIR}/execution/archive/${traceType}.%d{yyyy-MM-dd}.%i.json.gz</fileNamePattern>
+
+                    <fileNamePattern>
+                        ${LOG_DIR}/execution/archive/${traceType}.%d{yyyy-MM-dd}.%i.json.gz
+                    </fileNamePattern>
+
+                    <maxFileSize>10MB</maxFileSize>
                     <maxHistory>30</maxHistory>
                     <totalSizeCap>3GB</totalSizeCap>
-                    <maxFileSize>10MB</maxFileSize>
+
                 </rollingPolicy>
 
-                <encoder class="net.logstash.logback.encoder.LogstashEncoder">
+                <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
 
-                    <customFields>
-                        {
-                          "app":"${APP_NAME}",
-                          "env":"${APP_ENV}",
-                          "logCategory":"EXECUTION"
-                        }
-                    </customFields>
+                    <providers>
 
-                    <includeMdc>true</includeMdc>
-                    <includeContext>false</includeContext>
-                    <includeCallerData>true</includeCallerData>
+                        <timestamp>
+                            <fieldName>@timestamp</fieldName>
+                            <timeZone>UTC</timeZone>
+                        </timestamp>
 
-                    <fieldNames>
-                        <timestamp>@timestamp</timestamp>
-                        <level>level</level>
-                        <thread>thread</thread>
-                        <logger>logger</logger>
-                        <stackTrace>stack_trace</stackTrace>
-                        <message>message</message>
-                    </fieldNames>
+                        <logLevel>
+                            <fieldName>level</fieldName>
+                        </logLevel>
+
+                        <loggerName>
+                            <fieldName>logger</fieldName>
+                            <shortenedLoggerNameLength>40</shortenedLoggerNameLength>
+                        </loggerName>
+
+                        <message>
+                            <fieldName>message</fieldName>
+                        </message>
+
+                        <mdc>
+                            <includeMdcKeyName>requestId</includeMdcKeyName>
+                            <includeMdcKeyName>correlationId</includeMdcKeyName>
+                            <includeMdcKeyName>traceType</includeMdcKeyName>
+                        </mdc>
+
+                        <stackTrace>
+                            <fieldName>stack_trace</fieldName>
+                        </stackTrace>
+
+                    </providers>
 
                 </encoder>
+
             </appender>
+
         </sift>
 
     </appender>
 
+    <!-- Framework and dependency logs stay quieter -->
     <root level="DEBUG">
         <appender-ref ref="EXECUTION_JSON_FILE"/>
     </root>
-
-    <logger name="com.ecommerce.foundation" level="DEBUG"/>
 
 </configuration>

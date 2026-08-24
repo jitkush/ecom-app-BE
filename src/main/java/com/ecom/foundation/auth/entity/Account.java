@@ -1,4 +1,4 @@
-package com.ecom.foundation.auth.Entity;
+package com.ecom.foundation.auth.entity;
 
 import java.time.Instant;
 import java.util.UUID;
@@ -11,8 +11,10 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.Getter;
 
 @Entity
+@Getter
 @Table(name = "account", schema = "auth")
 public class Account{
     @Id
@@ -64,10 +66,6 @@ public class Account{
         this.createdAt = now;
         this.updatedAt = now;
         this.failedLoginCount = (short) 0;
-    }
-
-    public Long getId() {
-        return id;
     }
 
 }
