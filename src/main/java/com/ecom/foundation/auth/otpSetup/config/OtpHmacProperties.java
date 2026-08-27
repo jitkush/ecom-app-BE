@@ -15,9 +15,9 @@ public final class OtpHmacProperties {
     @NotBlank
     private final String secretBase64;
 
-    public OtpHmacProperties(String keyId, String secretBase64) {
+    public OtpHmacProperties(String keyId, String keyBase64) {
         this.keyId = keyId;
-        this.secretBase64 = secretBase64;
+        this.secretBase64 = keyBase64;
     }
 
     public String getKeyId() {
