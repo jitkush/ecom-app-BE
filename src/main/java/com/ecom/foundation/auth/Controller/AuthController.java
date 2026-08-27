@@ -44,7 +44,6 @@ public class AuthController {
             return ResponseEntity.accepted().body(response);
     }
 
-    @PostMapping("otp/verify")
     public ResponseEntity<Boolean> verify(
         @Valid @RequestBody OtpRequestModel request,
         HttpServletRequest servletRequest) {

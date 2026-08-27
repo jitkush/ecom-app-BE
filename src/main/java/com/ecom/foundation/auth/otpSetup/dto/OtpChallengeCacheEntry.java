@@ -12,7 +12,9 @@ public record OtpChallengeCacheEntry(
         Instant issuedAt,
         Instant expiresAt,
         Instant resendAvailableAt,
-        int failedAttempts
+        Instant cooloffPeriod,
+        int failedAttempts,
+        int maxVerificationAttempt
 ) {}
 
 

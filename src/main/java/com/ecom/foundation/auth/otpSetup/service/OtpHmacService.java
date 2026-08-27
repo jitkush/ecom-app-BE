@@ -22,8 +22,9 @@ public final class OtpHmacService {
     private final String OTP_DOMAIN = "AJ_OTP_V1";
     private final String MOBILE_DOMAIN = "AJ_OTP_MOBILE_V1";
 
-    private final String 
+    private final SecretKeySpec secretKey;
     private final String keyId;
+
 
     public OtpHmacService(OtpHmacProperties properties) {
 

@@ -30,7 +30,8 @@ app:
       validity: 5m
       resend-delay: 60s
       max-failed-attempts: 5
-
+      cooloff-period: 30m
+      max-verification-attempt: 3
       code-lengths:
         customer-signup: 6
         admin-login: 8
