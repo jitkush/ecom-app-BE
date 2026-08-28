@@ -3,6 +3,20 @@
   "configurations": [
     {
       "type": "java",
+      "name": "KeyGen",
+      "request": "launch",
+      "mainClass": "com.ecom.foundation.common.redis.KeyGen",
+      "projectName": "ecommerce-foundation"
+    },
+    {
+      "type": "java",
+      "name": "KeyGen",
+      "request": "launch",
+      "mainClass": "KeyGen",
+      "projectName": "ecommerce-foundation"
+    },
+    {
+      "type": "java",
       "name": "Launch EcommerceFoundationApplication (local)",
       "request": "launch",
       "mainClass": "com.ecom.foundation.EcommerceFoundationApplication",

@@ -3,6 +3,7 @@ package com.ecom.foundation.common.logging;
 import java.io.IOException;
 import java.util.Map;
 
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 

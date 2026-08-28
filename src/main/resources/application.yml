@@ -22,7 +22,27 @@ app:
   name: Ecommerce Foundation
   version: 0.0.1
   environment: ${spring.profiles.active}
+  security:
+    otp:
+      validity: 5m
+      resend-delay: 60s
+      max-failed-attempts: 5
+      cooloff-period: 30m
+      max-verification-attempt: 3
+      code-lengths:
+        customer-signup: 6
+        admin-login: 8
+        ops-login: 8
+
+      ip-limit:
+        max-requests: 20
+        window: 1m
+
+      hmac:
+        key-id: ${OTP_HMAC_KEY_ID:v1}
+        key-base64: ${OTP_HMAC_KEY_BASE64}
   redis:
     key:
       namespace: aj
       environment: ${APP_ENV:${spring.profiles.active}}
+      
