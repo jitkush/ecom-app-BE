@@ -2,9 +2,11 @@ package com.ecom.foundation;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 
 
 @SpringBootApplication
+@ConfigurationPropertiesScan
 public class EcommerceFoundationApplication {
     public static void main(String[] args) {
         SpringApplication.run(EcommerceFoundationApplication.class, args);

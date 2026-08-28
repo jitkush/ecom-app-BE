@@ -1,16 +1,12 @@
-{
-  "java.autobuild.enabled": true,
-  "java.completion.enabled": true,
+{`
   "java.configuration.updateBuildConfiguration": "automatic",
   "java.maven.downloadSources": true,
   "java.referencesCodeLens.enabled": true,
   "java.signatureHelp.enabled": true,
-<<<<<<< HEAD
-=======
   "java.autobuild.enabled": false,
   "java.compile.nullAnalysis.mode": "automatic",
->>>>>>> b4470a4 (ready for cherry pick)
   "maven.executable.preferMavenWrapper": true,
+
   "editor.quickSuggestions": {
     "other": "on",
     "comments": "off",
@@ -18,6 +14,7 @@
   },
   "editor.suggestOnTriggerCharacters": true,
   "editor.acceptSuggestionOnEnter": "on",
+
   "editor.inlineSuggest.enabled": true,
   "editor.inlineSuggest.showToolbar": "onHover",
   "github.copilot.enable": {

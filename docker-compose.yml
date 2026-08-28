@@ -1,28 +1,57 @@
-spring:
-  datasource:
-    url: ${DB_URL:jdbc:postgresql://localhost:5432/aparna_jewels}
-    username: ${DB_USERNAME:aparna_app}
-    password: ${DB_PASSWORD}
-    hikari:
-      pool-name: aparna-local-pool
-      maximum-pool-size: 10
-      minimum-idle: 2
-      connection-timeout: 30000
-      validation-timeout: 5000
-      max-lifetime: 1800000
-      idle-timeout: 600000
+services:
+  postgres:
+    image: postgres:17.9-alpine
+    container_name: aparna-postgres
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:?POSTGRES_USER is required}
+      POSTGRES_DB: ${POSTGRES_DB:?POSTGRES_DB is required}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:? POSTGRES_PASSWORD is required}
+    ports:
+      - "127.0.0.1:5432:5432"
+    volumes:
+      - aparna_postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    restart: unless-stopped
 
-  jpa:
-    open-in-view: false
-    hibernate:
-      ddl-auto: validate
-    properties:
-      hibernate:
-        jdbc:
-          time_zone: UTC
+  redis:
+    image: redis:7.4.7-alpine
+    container_name: aparna-redis
+    environment:
+      REDIS_USERNAME: ${REDIS_USERNAME:?REDIS_USERNAME is required}
+      REDIS_PASSWORD: ${REDIS_PASSWORD:?REDIS_PASSWORD is required}
+    command:
+      - /bin/sh
+      - -ec
+      - |
+        umask 077
 
-  flyway:
-    enabled: true
-    locations: classpath:db/migration
-    validate-migration-naming: true
-    baseline-on-migrate: false
+        printf '%s\n' \
+          'user default off' \
+          "user $${REDIS_USERNAME} on >$${REDIS_PASSWORD} ~aj:* +@connection +get +set +del +unlink +exists +expire +pexpire +ttl +pttl +persist +info" \
+          > /tmp/users.acl
+    
+        exec redis-server \
+          --appendonly yes \
+          --aclfile /tmp/users.acl
+    ports:
+      - "127.0.0.1:6379:6379"
+    volumes:
+      - aparna_redis_data:/data
+    healthcheck:
+      test: ["CMD-SHELL", "redis-cli --user \"$$REDIS_USERNAME\" --pass \"$$REDIS_PASSWORD\" ping | grep -q PONG"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    restart: unless-stopped
+
+volumes:
+  aparna_postgres_data:
+    name: aparna_postgres_data
+  aparna_redis_data:
+    name: aparna_redis_data
