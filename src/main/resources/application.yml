@@ -21,9 +21,6 @@ management:
 app:
   name: Ecommerce Foundation
   version: 0.0.1
-<<<<<<< HEAD
-  environment: ${spring.profiles.active}
-=======
   environment: ${spring.profiles.active}
   security:
     otp:
@@ -48,4 +45,4 @@ app:
     key:
       namespace: aj
       environment: ${APP_ENV:${spring.profiles.active}}
->>>>>>> b4470a4 (ready for cherry pick)
+      
