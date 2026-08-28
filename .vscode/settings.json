@@ -17,7 +17,6 @@
 
   "editor.inlineSuggest.enabled": true,
   "editor.inlineSuggest.showToolbar": "onHover",
-
   "github.copilot.enable": {
     "*": true,
     "java": true
