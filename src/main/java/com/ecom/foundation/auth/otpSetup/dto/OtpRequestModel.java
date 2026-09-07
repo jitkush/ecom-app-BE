@@ -1,6 +1,5 @@
 package com.ecom.foundation.auth.otpSetup.dto;
 
-import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 

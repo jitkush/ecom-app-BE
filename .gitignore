@@ -1,3 +1,5 @@
-/.evn
+/.env
 /target
 /logs
+*.pem
+/keys/
