@@ -33,11 +33,11 @@ public final class RedisOtpAtomicStore implements OtpAtomicStore {
         this.objectMapper = objectMapper;
 
         this.replaceIfUnchangedScript = new DefaultRedisScript<>();
-        this.replaceIfUnchangedScript.setLocation(new ClassPathResource("redis/replace-if-unchanged.lua"));
+        this.replaceIfUnchangedScript.setLocation(new ClassPathResource("redis/otp/replace-if-unchanged.lua"));
         this.replaceIfUnchangedScript.setResultType(Long.class);
 
         this.deleteIfUnchangedScript = new DefaultRedisScript<>();
-        this.deleteIfUnchangedScript.setLocation(new ClassPathResource("redis/delete-if-unchanged.lua"));
+        this.deleteIfUnchangedScript.setLocation(new ClassPathResource("redis/otp/delete-if-unchanged.lua"));
         this.deleteIfUnchangedScript.setResultType(Long.class);
     }
 

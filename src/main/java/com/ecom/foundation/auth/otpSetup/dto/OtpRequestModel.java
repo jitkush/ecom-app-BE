@@ -23,9 +23,4 @@ public record OtpRequestModel(
     String otp
 
 ) {
-    @Override
-    public String toString () {
-        return "{isd=%s, mobile=%s}"
-        .formatted(isd, mobile);  
-    }
 }
