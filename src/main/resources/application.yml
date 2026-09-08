@@ -41,6 +41,17 @@ app:
       hmac:
         key-id: ${OTP_HMAC_KEY_ID:v1}
         key-base64: ${OTP_HMAC_KEY_BASE64}
+    jwt:
+      otp-proof:
+        issuer: ${JWT_OTP_PROOF_ISSUER:aparna-jewels}
+        audience: ${JWT_OTP_PROOF_AUDIENCE:aparna-jewels-registration}
+        ttl: ${JWT_OTP_PROOF_TTL:5m}
+        clock-skew: ${JWT_OTP_PROOF_CLOCK_SKEW:30s}
+
+        kid: ${JWT_OTP_PROOF_KID:local-2026-01}
+
+        private-key: ${JWT_OTP_PROOF_PRIVATE_KEY_LOCATION}
+        public-key: ${JWT_OTP_PROOF_PUBLIC_KEY_LOCATION}
   redis:
     key:
       namespace: aj

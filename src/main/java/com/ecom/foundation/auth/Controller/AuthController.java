@@ -22,11 +22,10 @@ import jakarta.validation.Valid;
 @Validated
 public class AuthController {
 
-    @Autowired
-    private final OtpService otpService;
 
     private final Logger log = LoggerFactory.getLogger(AuthController.class);
 
+    private OtpService otpService;
     public AuthController(OtpService otpService) {
         this.otpService = otpService;
     }
@@ -44,11 +43,11 @@ public class AuthController {
             return ResponseEntity.accepted().body(response);
     }
 
-    public ResponseEntity<Boolean> verify(
-        @Valid @RequestBody OtpRequestModel request,
-        HttpServletRequest servletRequest) {
-            log.info("Started processing request for request {}", request.toString());
-            Boolean response = otpService.verifyOtp(request);
-            return ResponseEntity.accepted().body(response);
+    @PostMapping("otp/verify")
+    public ResponseEntity<String> verify( @Valid @RequestBody OtpRequestModel request, HttpServletRequest servletRequest) {
+        log.info("Started processing request for request {}", request.toString());
+        String response = otpService.verifyOtp(request);
+        return ResponseEntity.accepted().body(response);
     }
+
 }

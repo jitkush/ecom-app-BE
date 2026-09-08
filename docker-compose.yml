@@ -32,7 +32,7 @@ services:
 
         printf '%s\n' \
           'user default off' \
-          "user $${REDIS_USERNAME} on >$${REDIS_PASSWORD} ~aj:* +@connection +get +set +del +unlink +exists +expire +pexpire +ttl +pttl +persist +info" \
+          "user $${REDIS_USERNAME} on >$${REDIS_PASSWORD} ~aj:* +@connection +get +set +del +unlink +exists +expire +pexpire +ttl +pttl +persist +info +eval +evalsha" \
           > /tmp/users.acl
     
         exec redis-server \

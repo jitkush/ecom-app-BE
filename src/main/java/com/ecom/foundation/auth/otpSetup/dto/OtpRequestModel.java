@@ -1,6 +1,5 @@
 package com.ecom.foundation.auth.otpSetup.dto;
 
-import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 
@@ -24,9 +23,4 @@ public record OtpRequestModel(
     String otp
 
 ) {
-    @Override
-    public String toString () {
-        return "{isd=%s, mobile=%s}"
-        .formatted(isd, mobile);  
-    }
 }
