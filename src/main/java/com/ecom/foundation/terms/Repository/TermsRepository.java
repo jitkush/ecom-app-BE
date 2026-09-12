@@ -11,6 +11,7 @@ import com.ecom.foundation.terms.Entity.Terms;
 public interface TermsRepository extends JpaRepository<Terms, UUID> {
 
   Optional<Terms> findByStatus(TermStatus status);
+  Optional<Terms> findById(UUID id);
 
   Optional<Terms> findByVersion(String version);
 }

@@ -17,8 +17,7 @@ import lombok.Getter;
 
 @Entity
 @Table(
-    name = "terms_acceptance",
-    schema = "legal",
+    name = "terms_acceptance", schema = "legal",
     uniqueConstraints = {
         @UniqueConstraint(
             name = "uk_terms_acceptance_account_terms",
@@ -55,11 +54,9 @@ public class TermsAcceptance {
     }
 
     public TermsAcceptance(Long accountId, Terms terms) {
-        this.accountId =
-            Objects.requireNonNull(accountId, "Account ID cannot be null");
+        this.accountId = Objects.requireNonNull(accountId, "Account ID cannot be null");
 
-        this.terms =
-            Objects.requireNonNull(terms, "Terms cannot be null");
+        this.terms = Objects.requireNonNull(terms, "Terms cannot be null");
 
         this.acceptedAt = Instant.now();
     }

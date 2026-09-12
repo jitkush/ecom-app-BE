@@ -10,6 +10,7 @@ import com.ecom.foundation.auth.entity.Account;
 
 public interface AccountRepository extends JpaRepository<Account, Long> {
     Optional<Account> findByPublicId(UUID publicId);
+    Optional<Account> findById(String id);
     Optional<Account> findByEmailIgnoreCase(String email);
     Optional<Account> findByMobile(String mobile);
     boolean existsByEmail(String email);

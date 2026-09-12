@@ -45,15 +45,9 @@ public class AccountRole {
         this.role = Objects.requireNonNull(role, "Role cannot be null");
         this.assignedAt = Instant.now();
         this.assignedBy = assignedByAccountId;
-        Long accountId = Objects.requireNonNull(
-account.getId(),
-                "Account must be persisted before assigning a role"
-        );
+        Long accountId = Objects.requireNonNull(account.getId(),"Account must be persisted before assigning a role");
 
-        Short roleId = Objects.requireNonNull(
-                role.getId(),
-                "Role must have an ID before it can be assigned"
-        );
+        Short roleId = Objects.requireNonNull(role.getId(),"Role must have an ID before it can be assigned");
         this.id = new AccountRoleId(accountId, roleId);
     }
 

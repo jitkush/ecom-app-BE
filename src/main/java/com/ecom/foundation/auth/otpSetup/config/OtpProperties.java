@@ -45,7 +45,7 @@ public class OtpProperties {
     public static class CodeLengths {
 
         @Positive
-        private int customerSignup;
+        private int customerAuth;
 
         @Positive
         private int adminLogin;

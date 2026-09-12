@@ -24,4 +24,13 @@ public final class RandomGenerator {
 
         return String.format(Locale.ROOT, "%0" + length + "d", randomNumber);
     }
+    public byte[] secureRandomBytes (int byteCount) {
+        if (byteCount <= 0) {
+            throw new IllegalArgumentException("Byte count must be greater than 0");
+        }
+
+        byte[] randomBytes = new byte[byteCount];
+        secureRandom.nextBytes(randomBytes);
+        return randomBytes;
+    }
 }

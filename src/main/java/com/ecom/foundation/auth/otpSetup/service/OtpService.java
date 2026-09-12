@@ -206,7 +206,7 @@ public class OtpService {
 
         private int getOtpLength(OtpContext otpContext) {
                 return switch (otpContext) {
-                        case CUSTOMER_SIGNUP -> otpProperties.getCodeLengths().getCustomerSignup();
+                        case CUSTOMER_AUTH -> otpProperties.getCodeLengths().getCustomerAuth();
                         case ADMIN_LOGIN -> otpProperties.getCodeLengths().getAdminLogin();
                         case OPS_LOGIN -> otpProperties.getCodeLengths().getOpsLogin();
                 };
@@ -215,7 +215,7 @@ public class OtpService {
         private OtpContext resolveOtpContext(String suppliedContext) {
 
                 if (suppliedContext == null || suppliedContext.isBlank()) {
-                        return OtpContext.CUSTOMER_SIGNUP;
+                        return OtpContext.CUSTOMER_AUTH;
                 }
 
                 try {

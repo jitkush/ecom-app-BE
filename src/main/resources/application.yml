@@ -30,7 +30,7 @@ app:
       cooloff-period: 30m
       max-verification-attempt: 3
       code-lengths:
-        customer-signup: 6
+        customer-auth: 6
         admin-login: 8
         ops-login: 8
 
@@ -52,6 +52,9 @@ app:
 
         private-key: ${JWT_OTP_PROOF_PRIVATE_KEY_LOCATION}
         public-key: ${JWT_OTP_PROOF_PUBLIC_KEY_LOCATION}
+    session:
+      idle-timeout: 7d
+      absolute-timeout: 30d
   redis:
     key:
       namespace: aj
