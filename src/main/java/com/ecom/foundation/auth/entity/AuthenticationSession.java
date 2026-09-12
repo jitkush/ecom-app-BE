@@ -13,7 +13,7 @@ import lombok.Getter;
 
 @Entity 
 @Getter 
-@Table(name = "session", schema = "auth")
+@Table(name = "authentication_session", schema = "auth")
 public class AuthenticationSession {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -8,7 +8,6 @@ import java.time.Instant;
 import java.util.Base64;
 import java.util.HexFormat;
 import java.util.Objects;
-import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -16,7 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ecom.foundation.auth.config.SessionProperties;
 import com.ecom.foundation.auth.dto.CreatedSession;
-import com.ecom.foundation.auth.dto.SessionResponse;
 import com.ecom.foundation.auth.entity.AuthenticationSession;
 import com.ecom.foundation.auth.repository.SessionRepository;
 import com.ecom.foundation.common.error.ApplicationException;
