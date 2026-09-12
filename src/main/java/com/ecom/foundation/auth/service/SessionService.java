@@ -9,13 +9,18 @@ import java.util.Base64;
 import java.util.HexFormat;
 import java.util.Objects;
 
+import org.hibernate.annotations.ListIndexJavaType;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ecom.foundation.auth.config.SessionProperties;
 import com.ecom.foundation.auth.dto.CreatedSession;
+import com.ecom.foundation.auth.entity.Account;
+import com.ecom.foundation.auth.entity.AccountStatus;
 import com.ecom.foundation.auth.entity.AuthenticationSession;
+import com.ecom.foundation.auth.repository.AccountRepository;
 import com.ecom.foundation.auth.repository.SessionRepository;
 import com.ecom.foundation.common.error.ApplicationException;
 import com.ecom.foundation.common.error.ErrorCode;
@@ -30,13 +35,19 @@ public class SessionService {
     private final SessionRepository sessionRepository;
     private final SessionProperties sessionProperties;
     private final Clock clock;
+    private final AccountRepository accountRepository;
 
-    public SessionService(RandomGenerator randomGenerator, SessionRepository sessionRepository, SessionProperties sessionProperties, Clock clock) {
+    public SessionService(RandomGenerator randomGenerator, 
+        SessionRepository sessionRepository, 
+        SessionProperties sessionProperties, 
+        Clock clock, 
+        AccountRepository accountRepository) {
 
         this.randomGenerator = randomGenerator;
         this.sessionRepository = sessionRepository;
         this.sessionProperties = sessionProperties;
         this.clock = clock;
+        this.accountRepository = accountRepository; 
     }
 
     @Transactional(propagation = Propagation.MANDATORY)
@@ -55,23 +66,27 @@ public class SessionService {
         return new CreatedSession(rawSecret, savedSession);
     }
     
-    @Transactional 
+    @Transactional(readOnly = true)
     public AuthenticationSession authenticate(String rawSecret) {
-
         if (rawSecret == null || !rawSecret.matches("^[A-Za-z0-9_-]{43}$")) {
             throw new ApplicationException(ErrorCode.AUTHENTICATION_REQUIRED);
         }
 
-        AuthenticationSession fetchedSessionData = sessionRepository.findBySecretHash(rawSecret).orElseThrow(
-                () -> new ApplicationException(
-                ErrorCode.AUTHENTICATION_REQUIRED
-            ));
+        String secretHash = hashSecret(rawSecret);
 
-    Instant now = clock.instant();
+        AuthenticationSession fetchedSessionData = sessionRepository.findBySecretHash(secretHash).orElseThrow(() -> new ApplicationException(ErrorCode.AUTHENTICATION_REQUIRED));
 
-    if (fetchedSessionData.getRevokedAt() != null || !now.isBefore(fetchedSessionData.getIdleExpiresAt()) || !now.isBefore(fetchedSessionData.getAbsoluteExpiresAt())) {
-        throw new ApplicationException(ErrorCode.AUTHENTICATION_REQUIRED);
-    }
+        Instant now = clock.instant();
+
+        if (fetchedSessionData.getRevokedAt() != null || !now.isBefore(fetchedSessionData.getIdleExpiresAt()) || !now.isBefore(fetchedSessionData.getAbsoluteExpiresAt())) {
+            throw new ApplicationException(ErrorCode.AUTHENTICATION_REQUIRED);
+        }
+
+        Account account = accountRepository.findById(fetchedSessionData.getAccountId()).orElseThrow(() -> new ApplicationException(ErrorCode.ACCESS_DENIED));
+
+        if(account.getStatus() != AccountStatus.ACTIVE || (account.getLockedUntil() != null && now.isBefore(account.getLockedUntil()))) {
+            throw new ApplicationException(ErrorCode.ACCESS_DENIED);
+        }
 
         return fetchedSessionData;
     }

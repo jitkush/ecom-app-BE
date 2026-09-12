@@ -1,6 +1,5 @@
 package com.ecom.foundation.auth.repository;
 
-import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
