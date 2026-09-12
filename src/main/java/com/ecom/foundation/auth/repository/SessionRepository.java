@@ -9,7 +9,7 @@ import com.ecom.foundation.auth.entity.AuthenticationSession;
 public interface SessionRepository extends JpaRepository<AuthenticationSession, Long> {
     Optional<AuthenticationSession> findBySecretHash(String secretHash);
 
-    Optional<AuthenticationSession> findbyAccountId(String accountId);
+    Optional<AuthenticationSession> findByAccountId(Long accountId);
 
     Optional<AuthenticationSession> findByIdAndRevokedAtIsNull(Long id);
 
